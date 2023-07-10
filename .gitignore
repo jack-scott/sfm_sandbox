@@ -1,3 +1,12 @@
+output/*
+.vscode/*
+# Python files
+*.pyc
+
+# Pycache
+*__pycache__/
+.python_history
+
 # Prerequisites
 *.d
 

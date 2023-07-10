@@ -1,0 +1,7 @@
+{
+    "name": "SFMsandbox",
+    "version": "0.0.1",
+    "dependencies": [
+      "opencv4"
+    ]
+}
