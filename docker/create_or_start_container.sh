@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # Set default values for image name and container name
-IMAGE_NAME="scraper_image"
-CONTAINER_NAME="marketplace_scraper"
+IMAGE_NAME="sfm_sandbox"
+CONTAINER_NAME="sfm_build_env"
 
 #If arg is run, run the container
 # ARG="./main.py"
@@ -50,7 +50,7 @@ if [ ! "$(docker ps -q -f name=$CONTAINER_NAME)" ]; then
         --env DISPLAY=$DISPLAY  \
         --volume="$HOME/.Xauthority:/root/.Xauthority:rw" \
         --volume /tmp/.X11-unix:/tmp/.X11-unix \
-        --volume $DIR:/$(basename $DIR) \
+        --volume $DIR:/home/user/$(basename $DIR) \
         --volume /etc/localtime:/etc/localtime:ro \
         --net=host \
         $IMAGE_NAME \

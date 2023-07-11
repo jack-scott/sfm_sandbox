@@ -7,6 +7,9 @@ output/*
 *__pycache__/
 .python_history
 
+# Build
+build/
+
 # Prerequisites
 *.d
 
