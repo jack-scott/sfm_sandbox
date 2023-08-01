@@ -1,7 +1,14 @@
 output/*
+.container_headers/**
 .vscode/*
+# Allow
+!.vscode/c_cpp_properties.json
+# End allow
+
 # Python files
 *.pyc
+
+
 
 # Pycache
 *__pycache__/

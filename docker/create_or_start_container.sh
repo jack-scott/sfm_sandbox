@@ -1,12 +1,11 @@
 #!/bin/bash
-
+set -e
 # Set default values for image name and container name
 IMAGE_NAME="sfm_sandbox"
 CONTAINER_NAME="sfm_build_env"
 
 #If arg is run, run the container
 # ARG="./main.py"
-
 
 #get script location
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
@@ -44,19 +43,36 @@ if [ ! "$(docker ps -q -f name=$CONTAINER_NAME)" ]; then
         docker rm $CONTAINER_NAME
     fi
     echo "Creating container"
-    # Create and start the Docker container
-    docker run -it --name $CONTAINER_NAME \
-        --privileged \
-        --env DISPLAY=$DISPLAY  \
-        --volume="$HOME/.Xauthority:/root/.Xauthority:rw" \
-        --volume /tmp/.X11-unix:/tmp/.X11-unix \
-        --volume $DIR:/home/user/$(basename $DIR) \
-        --volume /etc/localtime:/etc/localtime:ro \
-        --net=host \
-        $IMAGE_NAME \
-        bash
+    docker create -it --name $CONTAINER_NAME \
+    --privileged \
+    --env DISPLAY=$DISPLAY  \
+    --volume="$HOME/.Xauthority:/root/.Xauthority:rw" \
+    --volume /tmp/.X11-unix:/tmp/.X11-unix \
+    --volume $DIR:/home/user/$(basename $DIR) \
+    --volume /etc/localtime:/etc/localtime:ro \
+    --net=host \
+    $IMAGE_NAME \
+    bash
+    echo "Removing old headers"
+    rm -rf $DIR/.container_headers
+    mkdir -p $DIR/.container_headers/usr/include
+    mkdir -p $DIR/.container_headers/usr/local/include
+
+    echo "Copying headers and libraries from container"
+    # Make local copy of the headers
+    docker cp -L $CONTAINER_NAME:/usr/include $DIR/.container_headers/usr/include
+    docker cp -L $CONTAINER_NAME:/usr/local/include $DIR/.container_headers/usr/local/include
+
+    # Start the Docker container
+    echo "Starting container"
+    docker start $CONTAINER_NAME
+
+    # Attach to the container's console
+    echo "Attaching to container"
+    docker exec -it $CONTAINER_NAME bash
+
 else
     # Container is already running, attach to the container's console'
     echo "Attaching to container"
-    docker attach $CONTAINER_NAME
+    docker exec -it $CONTAINER_NAME bash
 fi

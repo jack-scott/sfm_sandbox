@@ -1,0 +1,94 @@
+FROM ubuntu:22.04 as base
+
+# Create a non-root user
+RUN useradd -ms /bin/bash user
+
+# Set the password for the user
+RUN echo 'user:user' | chpasswd
+
+# Install sudo
+RUN apt-get update && apt-get install -y sudo
+
+# Allow the user to use sudo without a password
+RUN echo "user ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+
+USER root
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    cmake \
+    git \
+    pkg-config \
+    python3 \
+    python3-pip \
+    python3-setuptools \
+    python3-wheel \
+    wget \
+    curl \
+    zip \
+    unzip \
+    tar \
+    && rm -rf /var/lib/apt/lists/*
+
+USER user
+
+WORKDIR /home/user
+
+# Install magicmonty
+RUN git clone https://github.com/magicmonty/bash-git-prompt.git ~/.bash-git-prompt --depth=1
+RUN echo "if [ -f "$HOME/.bash-git-prompt/gitprompt.sh" ]; then" >> ~/.bashrc
+RUN echo "    GIT_PROMPT_ONLY_IN_REPO=1" >> ~/.bashrc
+RUN echo "    source $HOME/.bash-git-prompt/gitprompt.sh" >> ~/.bashrc
+RUN echo "fi" >> ~/.bashrc
+
+FROM base as opencv
+
+USER root
+
+RUN apt-get update && DEBIAN_FRONTEND="noninteractive" apt-get install -y \
+    libopencv-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+USER user
+
+# Vcpkg install is being too difficult at the moment. Will try again when I need CUDA compiled with openCV
+
+# USER root
+# RUN apt-get update && apt-get install -y \
+#     bison \
+#     libdbus-1-dev \
+#     libxi-dev \
+#     libxtst-dev \
+#     libx11-dev \
+#     libxft-dev \
+#     libxext-dev \
+#     libgles2-mesa-dev \
+
+# RUN git clone https://github.com/microsoft/vcpkg
+# RUN ./vcpkg/bootstrap-vcpkg.sh
+# 
+# RUN ./vcpkg install opencv4[contrib]:
+
+
+FROM opencv as opencv_gtsam
+
+USER root
+
+# GTSAM deps
+RUN apt-get update && \
+    apt-get install -y \
+    libboost-all-dev \
+    libtbb-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /home/user
+RUN git clone https://github.com/borglab/gtsam.git
+RUN cd gtsam && \
+    mkdir build && \
+    cd build && \
+    cmake .. && \
+    make install
+
+USER user
+
+# Set the command to run when the container starts
+CMD ["bash"]
