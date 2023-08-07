@@ -6,17 +6,17 @@
 
 class Camera {
 private:
-    cv::Mat K;
-    cv::Mat distortion;
-    cv::Size resolution;
     std::string name;
     CameraModel model;
     DistortionModel distortion_model;
+    cv::Mat K;
+    cv::Mat distortion;
+    cv::Size resolution;
+
 
 public:
     // Constructor
-    Camera(cv::Mat K, cv::Mat distortion, cv::Size resolution, std::string name,
-           CameraModel model, DistortionModel distortion_model);
+    Camera(std::string name, CameraModel model, DistortionModel distortion_model, cv::Mat K, cv::Mat distortion, cv::Size resolution);
 
     void undistortImage(const cv::Mat& image, cv::Mat& undistorted_image);
     void undistortPoints(const std::vector<cv::Point2f>& points, std::vector<cv::Point2f>& undistorted_points);
