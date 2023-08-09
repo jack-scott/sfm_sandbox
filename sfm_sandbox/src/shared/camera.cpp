@@ -1,4 +1,4 @@
-include "camera.h"
+#include "camera.h"
 
 Camera::Camera(std::string name, CameraModel model, DistortionModel distortion_model, cv::Mat K, cv::Mat distortion, cv::Size resolution) : name(name), model(model), distortion_model(distortion_model), K(K), distortion(distortion), resolution(resolution) {
 }

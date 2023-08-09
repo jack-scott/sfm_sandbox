@@ -2,7 +2,6 @@
 #define IMAGE_H
 
 #include <opencv4/opencv2/core.hpp>
-#include <opencv4/opencv2/types.hpp>
 #include "sfmTypes.h"
 
 /**

@@ -1,11 +1,14 @@
 include "image.h"
 
 Image::Image(std::string path) : path(path) {
-    data = cv::imread(path, cv::IMREAD_COLOR);
+    if (!loadData()) {
+        std::cout << "Error loading image data from " << path << std::endl;
+    } 
     resolution = data.size();
     name = generateName(path);
     generateThumbnail(data);
     generateTimestamp();
+    unloadData();
 }
 
 std::string Image::generateName(std::string& path) {
@@ -18,6 +21,26 @@ std::string Image::generateName(std::string& path) {
 
 cv::Mat Image::getData() {
     return data;
+}
+
+bool isLoaded() {
+    return !data.empty();
+}
+
+bool Image::loadData() {
+    if (data.empty()) {
+        data = cv::imread(path, cv::IMREAD_COLOR);
+        return true;
+    }
+    return false;
+}
+
+bool Image::unloadData() {
+    if (!data.empty()) {
+        data.release();
+        return true;
+    }
+    return false;
 }
 
 cv::Mat Image::getThumbnail() {

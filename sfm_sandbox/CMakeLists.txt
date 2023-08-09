@@ -20,22 +20,35 @@ include_directories(${Open3D_INCLUDE_DIRS})
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 # set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 
-
-# Add subdirectories for each module
-# add_subdirectory(frontend)
-# add_subdirectory(module2)
-# Add more modules as needed
-
 # Main executable
 add_executable(${PROJECT_NAME} main.cpp)
 
+add_library(dataloader SHARED
+    #dataloader
+    src/dataloader/dataLoader.cpp
+)
+
+add_library(shared SHARED
+    #shared
+    src/shared/camera.cpp
+    src/shared/frame.cpp
+    src/shared/image.cpp
+)
+
+# Add includes
+target_include_directories(${PROJECT_NAME} PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR}/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/dataloader
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/shared
+)
+
 # target_include_directories(${PROJECT_NAME} PUBLIC ${OpenCV_INCLUDE_DIRS})
 # Link modules and dependencies
-target_link_libraries(${PROJECT_NAME} ${OpenCV_LIBS})
+target_link_libraries(${PROJECT_NAME} ${OpenCV_LIBS} dataloader shared)
 
 
 #Visualizer demo executable
-add_executable(vizualizer_demo visualizer/src/visualizer_demo.cpp)
+add_executable(vizualizer_demo visualizer_demo.cpp)
 # Link Open3D libraries
 target_link_libraries(vizualizer_demo PRIVATE ${Open3D_LIBRARIES})
 

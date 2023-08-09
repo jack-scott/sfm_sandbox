@@ -1,15 +1,18 @@
-#include <opencv2/core.hpp>
-#include <opencv2/imgcodecs.hpp>
-#include <opencv2/highgui.hpp>
-
+#include "dataLoader.h"
+#include "image.h"
+#include <string.h>
+#include <iostream>
+#include <vector>
 
 int main(int argc, char** argv) {
-    cv::Mat img = cv::imread(argv[1], cv::IMREAD_COLOR);
-    cv::namedWindow("Example 1", cv::WINDOW_AUTOSIZE);
-    cv::imshow("Example 1", img);
-    cv::waitKey(0);
-    cv::destroyWindow("Example 1");
+    std::string path = argv[1];
+    DataLoader dataLoader;
+    std::vector<Image> images = dataLoader.loadImages(path);
+    for (Image image : images) {
+        std::cout << image.getName() << std::abort;
+    }
     return 0;
+
 }
 
 
