@@ -21,18 +21,27 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 # set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 
 # Main executable
-add_executable(${PROJECT_NAME} main.cpp)
+add_executable(${PROJECT_NAME} ${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp)
 
 add_library(dataloader SHARED
     #dataloader
-    src/dataloader/dataLoader.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/dataloader/dataLoader.cpp
+)
+
+target_include_directories(dataloader PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/dataloader
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/shared
 )
 
 add_library(shared SHARED
     #shared
-    src/shared/camera.cpp
-    src/shared/frame.cpp
-    src/shared/image.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/shared/camera.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/shared/frame.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/shared/image.cpp
+)
+
+target_include_directories(shared PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/shared
 )
 
 # Add includes
@@ -48,7 +57,7 @@ target_link_libraries(${PROJECT_NAME} ${OpenCV_LIBS} dataloader shared)
 
 
 #Visualizer demo executable
-add_executable(vizualizer_demo visualizer_demo.cpp)
+add_executable(vizualizer_demo ${CMAKE_CURRENT_SOURCE_DIR}/src/visualizer_demo.cpp)
 # Link Open3D libraries
 target_link_libraries(vizualizer_demo PRIVATE ${Open3D_LIBRARIES})
 

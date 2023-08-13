@@ -4,28 +4,29 @@
 #include <opencv4/opencv2/core.hpp>
 #include <gtsam/geometry/Pose3.h>
 #include "image.h"
+#include "camera.h"
 #include "sfmTypes.h"
 
 class Frame {
 private:
-    Camera& camera;
-    Image& image;
-    Image& depth;
-    Image& mask;
-    cv::Mat descriptors;
-    std::vector<cv::KeyPoint> keypoints;
-    gtsam::Pose3 pose;
+    std::shared_ptr<Camera> camera_;
+    std::shared_ptr<Image> image_;
+    std::shared_ptr<Image> depth_;
+    std::shared_ptr<Image> mask_;
+    cv::Mat descriptors_;
+    std::vector<cv::KeyPoint> keypoints_;
+    gtsam::Pose3 pose_;
 
 public:
     // Constructor
-    Frame(Camera& camera, Image& rgb_image);
-    Frame(Camera& camera, Image& rgb_image, gtsam::Pose3 pose);
+    Frame(std::shared_ptr<Camera> camera, std::shared_ptr<Image> rgb_image);
+    Frame(std::shared_ptr<Camera> camera, std::shared_ptr<Image> rgb_image, gtsam::Pose3 pose);
 
     // Getters
-    Camera& getCamera();
-    Image& getImage();
-    Image& getDepth();
-    Image& getMask();
+    std::shared_ptr<Camera> getCamera();
+    std::shared_ptr<Image> getImage();
+    std::shared_ptr<Image> getDepth();
+    std::shared_ptr<Image> getMask();
     cv::Mat getDescriptors();
     std::vector<cv::KeyPoint> getKeypoints();
     gtsam::Pose3 getPose();

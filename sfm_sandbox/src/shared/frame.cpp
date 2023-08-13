@@ -1,44 +1,43 @@
-include "frame.h"
+#include "frame.h"
 
 
-Frame::Frame(Camera& camera, Image& rgb_image) : camera(camera), image(rgb_image) {
+Frame::Frame(std::shared_ptr<Camera> camera, std::shared_ptr<Image> rgb_image) : camera_(camera), image_(rgb_image) {
     //Might need to initialise depth and mask here
 }
 
-Frame::Frame(Camera& camera, Image& rgb_image, gtsam::Pose3 pose) : camera(camera), image(rgb_image), pose(pose) {
+Frame::Frame(std::shared_ptr<Camera> camera, std::shared_ptr<Image> rgb_image, gtsam::Pose3 pose) : camera_(camera), image_(rgb_image), pose_(pose) {
     //Might need to initialise depth and mask here
+
 }
 
-
-gtsam::Pose3 setPose(gtsam::Pose3 pose) {
-    this->pose = pose;
+std::shared_ptr<Camera> Frame::getCamera() {
+    return camera_;
 }
 
-
-Camera& Frame::getCamera() {
-    return camera;
+std::shared_ptr<Image> Frame::getImage() {
+    return image_;
 }
 
-Image& Frame::getImage() {
-    return image;
+std::shared_ptr<Image> Frame::getDepth() {
+    return depth_;
 }
 
-Image& Frame::getDepth() {
-    return depth;
-}
-
-Image& Frame::getMask() {
-    return mask;
+std::shared_ptr<Image> Frame::getMask() {
+    return mask_;
 }
 
 cv::Mat Frame::getDescriptors() {
-    return descriptors;
+    return descriptors_;
 }
 
 std::vector<cv::KeyPoint> Frame::getKeypoints() {
-    return keypoints;
+    return keypoints_;
 }
 
 gtsam::Pose3 Frame::getPose() {
-    return pose;
+    return pose_;
+}
+
+void Frame::setPose(gtsam::Pose3 pose) {
+    pose_ = pose;
 }

@@ -2,6 +2,7 @@
 #define CAMERA_H
 
 #include <opencv4/opencv2/core.hpp>
+#include <opencv4/opencv2/calib3d.hpp>
 #include "sfmTypes.h"
 
 class Camera {

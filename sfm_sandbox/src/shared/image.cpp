@@ -1,61 +1,71 @@
-include "image.h"
+#include <opencv4/opencv2/imgcodecs.hpp>
+#include <opencv4/opencv2/imgproc.hpp>
+#include <iostream>
 
-Image::Image(std::string path) : path(path) {
+#include "image.h"
+
+
+Image::Image(std::string path) : path_(path) {
     if (!loadData()) {
         std::cout << "Error loading image data from " << path << std::endl;
+        // Should throw an exception here
     } 
-    resolution = data.size();
-    name = generateName(path);
-    generateThumbnail(data);
-    generateTimestamp();
+    resolution_ = data_->size();
+    setNameFromPath_();
+    generateThumbnailAndSet_();
+    generateTimestampAndSet_();
     unloadData();
 }
 
-std::string Image::generateName(std::string& path) {
-    size_t found = filePath.find_last_of("/\\");
+void Image::setNameFromPath_() {
+    size_t found = path_.find_last_of("/\\");
     if (found != std::string::npos) {
-        return filePath.substr(found + 1);
+        name_ = path_.substr(found + 1);
     }
-    return filePath;
+    name_ = path_;
 }
 
-cv::Mat Image::getData() {
-    return data;
+std::shared_ptr<cv::Mat> Image::getData() {
+    return data_;
 }
 
-bool isLoaded() {
-    return !data.empty();
+bool Image::isLoaded() {
+    return !data_->empty();
 }
 
 bool Image::loadData() {
-    if (data.empty()) {
-        data = cv::imread(path, cv::IMREAD_COLOR);
+    if (data_->empty()) {
+        data_ = std::make_shared<cv::Mat>(cv::imread(path_, cv::IMREAD_COLOR));
         return true;
     }
     return false;
 }
 
 bool Image::unloadData() {
-    if (!data.empty()) {
-        data.release();
+    if (!data_->empty()) {
+        data_->release();
         return true;
     }
     return false;
 }
 
 cv::Mat Image::getThumbnail() {
-    return thumbnail;
+    return thumbnail_;
 }
 
 std::string Image::getName() {
-    return name;
+    return name_;
 }
 
 std::string Image::getPath() {
-    return path;
+    return path_;
 }
 
-void Image::generateThumbnail() {
-    cv::size thumbnail_resolution = cv::Size(thumbnail_width, thumbnail_width * resolution.height / resolution.width);
-    cv::resize(data, thumbnail, thumbnail_resolution);
+void Image::generateThumbnailAndSet_() {
+    cv::Size thumbnail_resolution_ = cv::Size(thumbnail_width_, thumbnail_width_ * resolution_.height / resolution_.width);
+    cv::resize(*data_, thumbnail_, thumbnail_resolution_);
+}
+
+void Image::generateTimestampAndSet_() {
+    timestamp_ = std::time(nullptr);
 }

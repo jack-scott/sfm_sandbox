@@ -2,6 +2,7 @@
 #define IMAGE_H
 
 #include <opencv4/opencv2/core.hpp>
+
 #include "sfmTypes.h"
 
 /**
@@ -17,28 +18,31 @@
 class Image {
 private:
     //config params
-    int thumbnail_width = 150;
+    int thumbnail_width_ = 150;
     //
-    cv::Mat& data;   //TODO: This should be a pointer to allow lazy loading
-    cv::Size resolution;
-    cv::Mat thumbnail;
-    cv::Size thumbnail_resolution;
-    std::string name;
-    std::string path;
-    ImageType type;
-    std::string format;
-    std::time_t timestamp;
-    
-    void generateThumbnail();
-    void generateTimestamp();
-    void generateName(std::string path);
+    std::shared_ptr<cv::Mat> data_;   //TODO: This should be a pointer to allow lazy loading
+    cv::Size resolution_;
+    cv::Mat thumbnail_;
+    cv::Size thumbnail_resolution_;
+    std::string name_;
+    std::string path_;
+    ImageType type_;
+    std::string format_;
+    std::time_t timestamp_;
+
+    void setNameFromPath_();
+    void generateThumbnailAndSet_();
+    void generateTimestampAndSet_();
 public:
     // Constructor
     Image(std::string path);
-    cv::Mat getData();
+    std::shared_ptr<cv::Mat> getData();
     cv::Mat getThumbnail();
     std::string getName();
     std::string getPath();
+    bool loadData();
+    bool unloadData();
+    bool isLoaded();
 
 };
 

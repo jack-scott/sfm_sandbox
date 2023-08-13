@@ -25,8 +25,9 @@ RUN apt-get update && DEBIAN_FRONTEND="noninteractive" apt-get install -y \
 RUN wget https://github.com/isl-org/Open3D/releases/download/v0.17.0/open3d-devel-linux-x86_64-cxx11-abi-0.17.0.tar.xz
 #cuda
 # RUN wget https://github.com/isl-org/Open3D/releases/download/v0.17.0/open3d-devel-linux-x86_64-cxx11-abi-cuda-0.17.0.tar.xz
-RUN mkdir open3d_devel
-RUN tar -xf open3d-devel-linux-x86_64* -C open3d_devel/ --strip-components 1
+RUN mkdir open3d
+RUN tar -xf open3d-devel-linux-x86_64* -C open3d/ --strip-components 1
+RUN mv open3d /usr/local/include/
 
 RUN wget https://gitlab.com/libeigen/eigen/-/archive/3.4.0/eigen-3.4.0.tar.gz
 RUN tar -xf eigen-3.4.0.tar.gz
