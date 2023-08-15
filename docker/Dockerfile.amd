@@ -5,6 +5,7 @@ USER root
 #Install my stuff
 WORKDIR /home/user
 
+#install open3d
 RUN apt-get update && DEBIAN_FRONTEND="noninteractive" apt-get install -y \
     xorg-dev \
     libglu1-mesa-dev \
@@ -33,6 +34,21 @@ RUN wget https://gitlab.com/libeigen/eigen/-/archive/3.4.0/eigen-3.4.0.tar.gz
 RUN tar -xf eigen-3.4.0.tar.gz
 RUN mv eigen-3.4.0/Eigen /usr/local/include/
 
+USER user
+WORKDIR /home/user
+
+#install gtest
+RUN git clone https://github.com/google/googletest
+RUN cd googletest && \
+    mkdir build && \
+    cd build && \
+    cmake .. && \
+    make 
+
+USER root
+RUN cd googletest && \
+    cd build && \
+    make install
 
 USER user
 

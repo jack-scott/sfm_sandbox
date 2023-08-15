@@ -5,7 +5,7 @@
 #include "image.h"
 
 
-Image::Image(std::string path) : path_(path) {
+Image::Image(std::string path, bool load) : path_(path) {
     if (!loadData()) {
         std::cout << "Error loading image data from " << path << std::endl;
         // Should throw an exception here

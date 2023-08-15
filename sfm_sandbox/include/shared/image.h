@@ -35,7 +35,7 @@ private:
     void generateTimestampAndSet_();
 public:
     // Constructor
-    Image(std::string path);
+    Image(std::string path, bool load=True);
     std::shared_ptr<cv::Mat> getData();
     cv::Mat getThumbnail();
     std::string getName();

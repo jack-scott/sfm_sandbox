@@ -1,10 +1,20 @@
 cmake_minimum_required(VERSION 3.12)
 project(SFMsandbox)
 
+option(GUI "Build the gui" OFF)
+
 # Set C++ standard
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17 -lstdc++fs")
+
+
+# Set build type
+set(CMAKE_BUILD_TYPE Debug)
+
+# Find the GTest library
+find_package(GTest REQUIRED)
 
 # Find opencv
 find_package(OpenCV REQUIRED)
@@ -19,6 +29,10 @@ include_directories(${Open3D_INCLUDE_DIRS})
 # Set output directories for binaries and libraries
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 # set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+
+find_package(GTSAM REQUIRED)
+include_directories(${gtsam_INCLUDE_DIRS})
+
 
 # Main executable
 add_executable(${PROJECT_NAME} ${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp)
@@ -53,12 +67,26 @@ target_include_directories(${PROJECT_NAME} PRIVATE
 
 # target_include_directories(${PROJECT_NAME} PUBLIC ${OpenCV_INCLUDE_DIRS})
 # Link modules and dependencies
-target_link_libraries(${PROJECT_NAME} ${OpenCV_LIBS} dataloader shared)
+target_link_libraries(${PROJECT_NAME} ${OpenCV_LIBS} dataloader shared gtsam)
 
+if (GUI)
+    #Visualizer demo executable
+    add_executable(vizualizer_demo ${CMAKE_CURRENT_SOURCE_DIR}/src/visualizer_demo.cpp)
+    # Link Open3D libraries
+    target_link_libraries(vizualizer_demo PRIVATE ${Open3D_LIBRARIES})
+endif()
 
-#Visualizer demo executable
-add_executable(vizualizer_demo ${CMAKE_CURRENT_SOURCE_DIR}/src/visualizer_demo.cpp)
-# Link Open3D libraries
-target_link_libraries(vizualizer_demo PRIVATE ${Open3D_LIBRARIES})
+#Tests
+# Add the test executable
+add_executable(tests 
+    ${CMAKE_CURRENT_SOURCE_DIR}/test/dataLoader_tests.cpp)
 
-# Add more dependencies as needed
+# Add includes
+target_include_directories(tests PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR}/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/dataloader
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/shared
+)
+
+# Link the test executable with the GTest library
+target_link_libraries(tests GTest::GTest GTest::Main dataloader shared gtsam ${OpenCV_LIBS})  

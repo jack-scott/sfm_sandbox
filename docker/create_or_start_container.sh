@@ -50,6 +50,7 @@ if [ ! "$(docker ps -q -f name=$CONTAINER_NAME)" ]; then
     --volume /tmp/.X11-unix:/tmp/.X11-unix \
     --volume $DIR:/home/user/$(basename $DIR) \
     --volume /etc/localtime:/etc/localtime:ro \
+    --volume ~/.ssh/known_hosts:/home/user/.ssh/known_hosts \
     --net=host \
     $IMAGE_NAME \
     bash
