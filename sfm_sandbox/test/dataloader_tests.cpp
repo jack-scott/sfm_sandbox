@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include <dataLoader.h>
+#include <dataloader.h>
 #include <filesystem>
 #include <fstream>
 
@@ -8,12 +8,16 @@ class DataLoaderTest : public ::testing::Test
 protected:
     void SetUp() override
     {
+        path_ = "/tmp/test_files";
+        std::filesystem::remove_all(path_);
     }
 
     void TearDown() override
     {
-        // Clean up any resources allocated in SetUp().
+        std::filesystem::remove_all(path_);    
     }
+
+    std::string path_;
 };
 
 // TEST_F(DataLoaderTest, test_load_images)
@@ -57,24 +61,23 @@ protected:
 TEST_F(DataLoaderTest, test_get_filenames)
 {
     // Create a temporary directory and some test files.
-    std::string path = "/tmp/test_files";
-    std::filesystem::create_directory(path);
-    std::ofstream file1(path + "/test1.txt");
-    std::ofstream file2(path + "/test2.dat");
+    std::filesystem::create_directory(path_);
+    std::ofstream file1(path_ + "/test1.txt");
+    std::ofstream file2(path_ + "/test2.dat");
     file1.close();
     file2.close();
 
     // Get the filenames and check that the correct number were returned.
     DataLoader loader;
-    std::vector<std::string> filenames = loader.getFilenames(path);
+    std::vector<std::string> filenames = loader.getFilenames(path_);
     EXPECT_EQ(filenames.size(), 2);
 
     // Check that the filenames are correct.
-    EXPECT_EQ(filenames[0], path + "/test1.txt");
-    EXPECT_EQ(filenames[1], path + "/test2.dat");
+    EXPECT_EQ(filenames[0], path_ + "/test1.txt");
+    EXPECT_EQ(filenames[1], path_ + "/test2.dat");
 
     // Clean up the temporary directory.
-    std::filesystem::remove_all(path);
+    std::filesystem::remove_all(path_);
 }
 
 TEST_F(DataLoaderTest, test_is_supported_image)

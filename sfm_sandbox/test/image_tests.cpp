@@ -2,32 +2,74 @@
 #include <image.h>
 #include <filesystem>
 #include <fstream>
+#include <opencv4/opencv2/imgcodecs.hpp>
 
-class ImageTests : public ::testing::Test
+class ImageTest : public ::testing::Test
 {
 protected:
     void SetUp() override
     {
+        // Create a temporary directory and some test image files.
+        path_ = "/tmp/test_images";
+        std::filesystem::remove_all(path_);
+
+        std::filesystem::create_directory(path_);
+        std::ofstream file1(path_ + "/empty_file.jpg");
+        std::ofstream file2(path_ + "/empty_file.png");
+        file1.close();
+        file2.close();
+
+        // Generate a 1x1 image as a test image.
+        cv::Mat image(1, 1, CV_8UC3, cv::Scalar(0, 0, 0));
+        cv::imwrite(path_ + "/1x1.jpg", image);
     }
 
     void TearDown() override
     {
         // Clean up any resources allocated in SetUp().
+        std::filesystem::remove_all(path_);
     }
+
+    std::string path_;
 };
 
-
-TEST_F(ImageTests, test_is_supported_video)
+TEST_F(ImageTest, test_load_data)
 {
-    // Test that is_supported_video returns true for supported video files.
-    DataLoader loader;
-    EXPECT_TRUE(loader.is_supported_video("test.mp4"));
-    EXPECT_TRUE(loader.is_supported_video("test.avi"));
-    EXPECT_TRUE(loader.is_supported_video("test.mov"));
-    EXPECT_TRUE(loader.is_supported_video("test.mkv"));
+    // Test that loadData loads the image data correctly.
+    Image image(path_ + "/1x1.jpg", false);
+    EXPECT_FALSE(image.isLoaded());
+    EXPECT_TRUE(image.loadData());
+    EXPECT_TRUE(image.isLoaded());
+}
 
-    // Test that is_supported_video returns false for unsupported video files.
-    EXPECT_FALSE(loader.is_supported_video("test.txt"));
-    EXPECT_FALSE(loader.is_supported_video("test.pdf"));
-    EXPECT_FALSE(loader.is_supported_video("test.doc"));
+TEST_F(ImageTest, test_unload_data)
+{
+    // Test that unloadData unloads the image data correctly.
+    Image image(path_ + "/1x1.jpg", true);
+    EXPECT_TRUE(image.isLoaded());
+    EXPECT_TRUE(image.unloadData());
+    EXPECT_FALSE(image.isLoaded());
+}
+
+// TEST_F(ImageTest, test_get_thumbnail)
+// {
+//     // Test that getThumbnail generates the thumbnail correctly.
+//     Image image(path_ + "/1x1.jpg", true);
+//     cv::Mat thumbnail = image.getThumbnail();
+//     EXPECT_EQ(thumbnail.size().width, image.thumbnail_width_);
+//     EXPECT_EQ(thumbnail.size().height, image.thumbnail_width_ * image.resolution_.height / image.resolution_.width);
+// }
+
+TEST_F(ImageTest, test_get_name)
+{
+    // Test that getName returns the correct name.
+    Image image(path_ + "/empty_file.jpg", false);
+    EXPECT_EQ(image.getName(), "empty_file.jpg");
+}
+
+TEST_F(ImageTest, test_get_path)
+{
+    // Test that getPath returns the correct path.
+    Image image(path_ + "/empty_file.jpg", false);
+    EXPECT_EQ(image.getPath(), path_ + "/empty_file.jpg");
 }

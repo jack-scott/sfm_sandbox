@@ -1,4 +1,4 @@
-#include "dataLoader.h"
+#include "dataloader.h"
 #include <filesystem>
 
 
@@ -8,16 +8,25 @@ DataLoader::DataLoader() {
 DataLoader::~DataLoader() {
 }
 
-std::vector<Image> DataLoader::loadImages(std::string path) {
+std::vector<Image> DataLoader::loadImages(std::string path){
+    return createImagesFromPath(path, true);
+}
+
+std::vector<Image> DataLoader::importImages(std::string path){
+    return createImagesFromPath(path, false);
+}
+
+std::vector<Image> DataLoader::createImagesFromPath(std::string path, bool load_now) {
     std::vector<Image> images;
     std::vector<std::string> filenames = getFilenames(path);
     for (const std::string& filename : filenames) {
         if (is_supported_image(filename)) {
-            images.push_back(Image(filename));
+            images.push_back(Image(filename, load_now));
         }
     }
     return images;
 }
+
 
 std::vector<std::string> DataLoader::getFilenames(std::string path) {
     std::vector<std::string> filenames;

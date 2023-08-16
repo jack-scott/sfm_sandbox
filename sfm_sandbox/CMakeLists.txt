@@ -39,7 +39,7 @@ add_executable(${PROJECT_NAME} ${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp)
 
 add_library(dataloader SHARED
     #dataloader
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/dataloader/dataLoader.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/dataloader/dataloader.cpp
 )
 
 target_include_directories(dataloader PRIVATE
@@ -79,7 +79,9 @@ endif()
 #Tests
 # Add the test executable
 add_executable(tests 
-    ${CMAKE_CURRENT_SOURCE_DIR}/test/dataLoader_tests.cpp)
+    ${CMAKE_CURRENT_SOURCE_DIR}/test/dataloader_tests.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/test/image_tests.cpp
+)
 
 # Add includes
 target_include_directories(tests PRIVATE
@@ -90,3 +92,11 @@ target_include_directories(tests PRIVATE
 
 # Link the test executable with the GTest library
 target_link_libraries(tests GTest::GTest GTest::Main dataloader shared gtsam ${OpenCV_LIBS})  
+
+
+# Add the test executable
+add_executable(test_cv 
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/cv_test.cpp
+)
+
+target_link_libraries(test_cv ${OpenCV_LIBS})

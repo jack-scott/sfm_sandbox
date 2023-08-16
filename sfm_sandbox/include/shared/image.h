@@ -3,7 +3,7 @@
 
 #include <opencv4/opencv2/core.hpp>
 
-#include "sfmTypes.h"
+#include "sfm_types.h"
 
 /**
  * @class
@@ -16,6 +16,18 @@
 */
 
 class Image {
+
+public:
+    // Constructor
+    Image(std::string path, bool load_now);
+    std::shared_ptr<cv::Mat> getData();
+    cv::Mat getThumbnail();
+    std::string getName();
+    std::string getPath();
+    bool loadData();
+    bool unloadData();
+    bool isLoaded();
+
 private:
     //config params
     int thumbnail_width_ = 150;
@@ -33,16 +45,6 @@ private:
     void setNameFromPath_();
     void generateThumbnailAndSet_();
     void generateTimestampAndSet_();
-public:
-    // Constructor
-    Image(std::string path, bool load=True);
-    std::shared_ptr<cv::Mat> getData();
-    cv::Mat getThumbnail();
-    std::string getName();
-    std::string getPath();
-    bool loadData();
-    bool unloadData();
-    bool isLoaded();
 
 };
 

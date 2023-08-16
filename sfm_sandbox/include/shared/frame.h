@@ -5,7 +5,7 @@
 #include <gtsam/geometry/Pose3.h>
 #include "image.h"
 #include "camera.h"
-#include "sfmTypes.h"
+#include "sfm_types.h"
 
 class Frame {
 private:

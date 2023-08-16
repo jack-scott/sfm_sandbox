@@ -3,7 +3,7 @@
 
 #include <opencv4/opencv2/core.hpp>
 #include <opencv4/opencv2/calib3d.hpp>
-#include "sfmTypes.h"
+#include "sfm_types.h"
 
 class Camera {
 private:
