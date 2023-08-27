@@ -43,6 +43,7 @@ add_library(dataloader SHARED
 )
 
 target_include_directories(dataloader PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR}/include
     ${CMAKE_CURRENT_SOURCE_DIR}/include/dataloader
     ${CMAKE_CURRENT_SOURCE_DIR}/include/shared
 )
@@ -55,6 +56,7 @@ add_library(shared SHARED
 )
 
 target_include_directories(shared PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR}/include
     ${CMAKE_CURRENT_SOURCE_DIR}/include/shared
 )
 

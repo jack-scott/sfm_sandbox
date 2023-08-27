@@ -51,14 +51,33 @@ TEST_F(ImageTest, test_unload_data)
     EXPECT_FALSE(image.isLoaded());
 }
 
-// TEST_F(ImageTest, test_get_thumbnail)
-// {
-//     // Test that getThumbnail generates the thumbnail correctly.
-//     Image image(path_ + "/1x1.jpg", true);
-//     cv::Mat thumbnail = image.getThumbnail();
-//     EXPECT_EQ(thumbnail.size().width, image.thumbnail_width_);
-//     EXPECT_EQ(thumbnail.size().height, image.thumbnail_width_ * image.resolution_.height / image.resolution_.width);
-// }
+TEST_F(ImageTest, test_get_thumbnail)
+{
+    // Test that getThumbnail generates the thumbnail correctly.
+    Image image(path_ + "/1x1.jpg", true);
+    cv::Mat thumbnail = image.getThumbnail();
+    EXPECT_TRUE(!thumbnail.empty());
+}
+
+TEST_F(ImageTest, test_get_resolution)
+{
+    // Test that getResolution returns the correct resolution.
+    Image image(path_ + "/1x1.jpg", true);
+    cv::Size resolution = image.getResolution();
+    EXPECT_EQ(resolution.width, 1);
+    EXPECT_EQ(resolution.height, 1);
+}
+
+TEST_F(ImageTest, test_thumbnail_resolution)
+{
+    Image image(path_ + "/1x1.jpg", true);
+    cv::Mat thumbnail = image.getThumbnail();
+    cv::Size actual_resolution = thumbnail.size();
+    cv::Size expected_resolution = image.getThumbnailResolution();
+    EXPECT_EQ(actual_resolution.width, expected_resolution.width);
+    EXPECT_EQ(actual_resolution.height, expected_resolution.height);
+}
+
 
 TEST_F(ImageTest, test_get_name)
 {

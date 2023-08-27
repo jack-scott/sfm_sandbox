@@ -1,22 +1,25 @@
-#include <opencv4/opencv2/imgcodecs.hpp>
-#include <opencv4/opencv2/imgproc.hpp>
+#include "shared/image.h"
+
 #include <iostream>
 
-#include "image.h"
+#include <opencv4/opencv2/imgcodecs.hpp>
+#include <opencv4/opencv2/imgproc.hpp>
+
 
 Image::Image(std::string path, bool load_now) : path_(path), data_(std::make_shared<cv::Mat>())
 {
     if (load_now)
     {
-        if (!loadData())
+        if (loadData())    //TODO swap out for glogging and assert
         {
+            resolution_ = data_->size();
+            generateThumbnailAndSet_();
+            generateTimestampAndSet_();   
+        }else{
             std::cout << "Error loading image data from " << path << std::endl;
             // Should throw an exception here
         }
-        resolution_ = data_->size();
-        generateThumbnailAndSet_();
-        generateTimestampAndSet_();
-        unloadData();
+
     }
     setNameFromPath_();
 }
@@ -47,9 +50,12 @@ bool Image::isLoaded()
 
 bool Image::loadData()
 {
-    if (isLoaded()){
+    if (isLoaded())
+    {
         return true;
-    }else{
+    }
+    else
+    {
         try
         {
             data_ = std::make_shared<cv::Mat>(cv::imread(path_, cv::IMREAD_COLOR)); // TODO make an interface between opencv so it can be swapped out in the future
@@ -88,9 +94,19 @@ std::string Image::getPath()
     return path_;
 }
 
+cv::Size Image::getResolution()
+{
+    return resolution_;
+}
+
+cv::Size Image::getThumbnailResolution()
+{
+    return thumbnail_resolution_;
+}
+
 void Image::generateThumbnailAndSet_()
 {
-    cv::Size thumbnail_resolution_ = cv::Size(thumbnail_width_, thumbnail_width_ * resolution_.height / resolution_.width);
+    thumbnail_resolution_ = cv::Size(thumbnail_width_, thumbnail_width_ * resolution_.height / resolution_.width);
     cv::resize(*data_, thumbnail_, thumbnail_resolution_);
 }
 

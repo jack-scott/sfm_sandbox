@@ -24,6 +24,8 @@ public:
     cv::Mat getThumbnail();
     std::string getName();
     std::string getPath();
+    cv::Size getResolution();
+    cv::Size getThumbnailResolution();
     bool loadData();
     bool unloadData();
     bool isLoaded();

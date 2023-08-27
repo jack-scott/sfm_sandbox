@@ -3,9 +3,10 @@
 
 #include <opencv4/opencv2/core.hpp>
 #include <gtsam/geometry/Pose3.h>
-#include "image.h"
-#include "camera.h"
-#include "sfm_types.h"
+
+#include "shared/image.h"
+#include "shared/camera.h"
+#include "shared/sfm_types.h"
 
 class Frame {
 private:

@@ -3,7 +3,8 @@
 
 #include <vector>
 #include <string>
-#include "image.h"
+
+#include "shared/image.h"
 class DataLoader
 {
 public:
