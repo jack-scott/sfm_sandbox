@@ -29,7 +29,9 @@ public:
     std::shared_ptr<Image> getDepth();
     std::shared_ptr<Image> getMask();
     cv::Mat getDescriptors();
+    void setDescriptors(cv::Mat descriptors);
     std::vector<cv::KeyPoint> getKeypoints();
+    void setKeypoints(std::vector<cv::KeyPoint> keypoints);
     gtsam::Pose3 getPose();
 
     // Setters

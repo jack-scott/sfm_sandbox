@@ -30,8 +30,16 @@ cv::Mat Frame::getDescriptors() {
     return descriptors_;
 }
 
+void Frame::setDescriptors(cv::Mat descriptors) {
+    descriptors_ = descriptors;
+}
+
 std::vector<cv::KeyPoint> Frame::getKeypoints() {
     return keypoints_;
+}
+
+void Frame::setKeypoints(std::vector<cv::KeyPoint> keypoints) {
+    keypoints_ = keypoints;
 }
 
 gtsam::Pose3 Frame::getPose() {
