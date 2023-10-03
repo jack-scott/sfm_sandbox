@@ -60,6 +60,22 @@ target_include_directories(shared PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/include/shared
 )
 
+add_library(frontend SHARED
+    #frontend
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frontend/opencv/features_orb_ocv.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/frontend/opencv/features_sift_ocv.cpp
+
+)
+
+target_include_directories(frontend PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR}/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/shared
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/frontend
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/frontend/opencv
+
+)
+
+
 # Add includes
 target_include_directories(${PROJECT_NAME} PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/include
@@ -83,6 +99,7 @@ endif()
 add_executable(tests 
     ${CMAKE_CURRENT_SOURCE_DIR}/test/dataloader_tests.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/test/image_tests.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/test/features_cv_tests.cpp
 )
 
 # Add includes
@@ -90,10 +107,12 @@ target_include_directories(tests PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/include
     ${CMAKE_CURRENT_SOURCE_DIR}/include/dataloader
     ${CMAKE_CURRENT_SOURCE_DIR}/include/shared
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/frontend
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/frontend/opencv
 )
 
 # Link the test executable with the GTest library
-target_link_libraries(tests GTest::GTest GTest::Main dataloader shared gtsam ${OpenCV_LIBS})  
+target_link_libraries(tests GTest::GTest GTest::Main dataloader shared frontend gtsam ${OpenCV_LIBS})  
 
 
 # Add the test executable

@@ -8,13 +8,14 @@
 #include "shared/image.h"
 #include "shared/frame.h"
 
+//TODO: Const all through here?
 
 class FeatureDetector
 {
 public:
-    virtual void detect(std::shared_ptr<cv::Mat> image, std::vector<cv::KeyPoint>& keypoints) = 0;
-    virtual void compute(std::shared_ptr<cv::Mat>, std::vector<cv::KeyPoint>& keypoints, cv::Mat& descriptors) = 0;
-    virtual void detectAndCompute(std::shared_ptr<cv::Mat>, std::vector<cv::KeyPoint>& keypoints, cv::Mat& descriptors) = 0;
+    virtual void detect(const std::shared_ptr<cv::Mat>& image, std::vector<cv::KeyPoint>& keypoints) = 0;
+    virtual void compute(const std::shared_ptr<cv::Mat>& image, std::vector<cv::KeyPoint>& keypoints, cv::Mat& descriptors) = 0;
+    virtual void detectAndCompute(const std::shared_ptr<cv::Mat>& image, std::vector<cv::KeyPoint>& keypoints, cv::Mat& descriptors) = 0;
     virtual ~FeatureDetector() {};
 
     void detect(std::vector<std::shared_ptr<Image>> images, std::vector<std::vector<cv::KeyPoint>>& keypoints){
