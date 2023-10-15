@@ -100,6 +100,7 @@ add_executable(tests
     ${CMAKE_CURRENT_SOURCE_DIR}/test/dataloader_tests.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/test/image_tests.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/test/features_cv_tests.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/test/generic_feature_detector_tests.cpp
 )
 
 # Add includes

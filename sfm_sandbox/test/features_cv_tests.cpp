@@ -16,9 +16,10 @@ protected:
     void SetUp() override
     {
         //add generic setup
-        const std::string relative_image_path = "../../test/monkey.png";
+        const std::string relative_image_path = "../test/monkey.png";
         const std::filesystem::path current_dir = std::filesystem::current_path();
         const std::filesystem::path image_file = current_dir / relative_image_path;
+
         image_path = image_file.string();
     }
 
@@ -27,7 +28,7 @@ protected:
         // Clean up any resources allocated in SetUp().
     }
 
-    const std::string image_path;
+    std::string image_path;
 };
 
 TEST_F(FeaturesCVTest, test_orb_features)
@@ -58,6 +59,8 @@ TEST_F(FeaturesCVTest, test_orb_features)
     EXPECT_TRUE(descriptors2.size().width > 0);
 
 }
+
+
 
 TEST_F(FeaturesCVTest, test_sift_features)
 {
