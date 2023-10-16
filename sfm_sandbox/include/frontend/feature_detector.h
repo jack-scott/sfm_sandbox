@@ -9,15 +9,17 @@
 #include "shared/frame.h"
 
 //TODO: Const all through here?
+namespace feature_detector{
 
 class FeatureDetector
 {
-public:
+protected:
     virtual void detect(const std::shared_ptr<cv::Mat>& image, std::vector<cv::KeyPoint>& keypoints) = 0;
     virtual void compute(const std::shared_ptr<cv::Mat>& image, std::vector<cv::KeyPoint>& keypoints, cv::Mat& descriptors) = 0;
     virtual void detectAndCompute(const std::shared_ptr<cv::Mat>& image, std::vector<cv::KeyPoint>& keypoints, cv::Mat& descriptors) = 0;
     virtual ~FeatureDetector() {};
 
+public:
     void detect(std::vector<std::shared_ptr<Image>> images, std::vector<std::vector<cv::KeyPoint>>& keypoints){
         for (auto image : images){
             std::vector<cv::KeyPoint> image_keypoints;
@@ -98,5 +100,7 @@ public:
     }
 
 };
+
+} // namespace feature_detector
 
 #endif // FEATURE_DETECTOR_H

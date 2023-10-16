@@ -1,5 +1,7 @@
 #include "frontend/opencv/features_sift_ocv.h"
 
+namespace feature_detector{
+
 SIFTFeatureDetectorCV::SIFTFeatureDetectorCV()
 {
     detector = cv::SIFT::create();
@@ -19,3 +21,5 @@ void SIFTFeatureDetectorCV::detectAndCompute(const std::shared_ptr<cv::Mat>& ima
 {
     detector->detectAndCompute(*image,  cv::noArray(), keypoints, descriptors);
 }
+
+} // namespace feature_detector

@@ -39,13 +39,17 @@ protected:
 
 TEST_F(GenericFeatureDetectorTest, test_from_image_vector)
 {
-    Image image1(image_path, true); 
-    Image image2(image_path, true);
-    std::vector <std::shared_ptr<Image>> images;
+    std::shared_ptr<Image> image1 = std::make_shared<Image>(image_path, true);
+    std::shared_ptr<Image> image2 = std::make_shared<Image>(image_path, true);
+    std::vector<std::shared_ptr<Image>> images;
     images.push_back(image1);
     images.push_back(image2);
 
-    Camera  camera1("test", CameraModel::PINHOLE , cv::Mat, cv::Mat, cv::Size(640, 480)); 
+    cv::Mat camera_matrix = cv::Mat::eye(3, 3, CV_64F);
+    cv::Mat distortion_coefficients = cv::Mat::zeros(5, 1, CV_64F);
+    cv::Size image_size(640, 480);
+    std::shared_ptr<Camera> camera1= std::make_shared<Camera>("test", CameraModel::PINHOLE, DistortionModel::RADTAN, camera_matrix, distortion_coefficients, image_size);
+    
     Frame frame1(camera1, image1);
 
     std::vector<cv::KeyPoint> keypoints1;
@@ -53,18 +57,24 @@ TEST_F(GenericFeatureDetectorTest, test_from_image_vector)
     std::vector<std::vector<cv::KeyPoint>> keypoints_vec;
     keypoints_vec.push_back(keypoints1);
     keypoints_vec.push_back(keypoints2);
-    cv::Mat descriptors;
 
-    ORBFeatureDetectorCV detector;
+    feature_detector::ORBFeatureDetectorCV detector;
     
     
     detector.detect(images, keypoints_vec);
 
     //check that the number of keypoints is not zero
-    EXPECT_TRUE(keypoints.size() > 0);
+    EXPECT_TRUE(keypoints_vec[0].size() > 0);
+    EXPECT_TRUE(keypoints_vec[1].size() > 0);
 
-    detector.compute(images, keypoints_vec, descriptors);
-    EXPECT_TRUE(descriptors.size().height > 0);
-    EXPECT_TRUE(descriptors.size().width > 0);
+    cv::Mat descriptors1;
+    cv::Mat descriptors2;
+    std::vector<cv::Mat> descriptors_vec;
+    descriptors_vec.push_back(descriptors1);
+    descriptors_vec.push_back(descriptors2);
+
+    detector.compute(images, keypoints_vec, descriptors_vec);
+    EXPECT_TRUE(descriptors_vec[0].size().height > 0);
+    EXPECT_TRUE(descriptors_vec[1].size().width > 0);
 
 }

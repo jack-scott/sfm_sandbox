@@ -1,5 +1,7 @@
 #include "frontend/opencv/features_orb_ocv.h"
 
+namespace feature_detector{
+
 ORBFeatureDetectorCV::ORBFeatureDetectorCV()
 {
     detector = cv::ORB::create();
@@ -19,3 +21,5 @@ void ORBFeatureDetectorCV::detectAndCompute(const std::shared_ptr<cv::Mat>& imag
 {
     detector->detectAndCompute(*image,  cv::noArray(), keypoints, descriptors);
 }
+
+} // namespace feature_detector

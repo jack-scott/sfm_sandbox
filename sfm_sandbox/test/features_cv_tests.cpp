@@ -40,7 +40,7 @@ TEST_F(FeaturesCVTest, test_orb_features)
     std::vector<cv::KeyPoint> keypoints;
     cv::Mat descriptors;
 
-    ORBFeatureDetectorCV detector;
+    feature_detector::ORBFeatureDetectorCV detector;
     detector.detectAndCompute(img, keypoints, descriptors);
 
     //check that the number of keypoints is not zero
@@ -71,7 +71,7 @@ TEST_F(FeaturesCVTest, test_sift_features)
     std::vector<cv::KeyPoint> keypoints;
     cv::Mat descriptors;
 
-    SIFTFeatureDetectorCV detector;
+    feature_detector::SIFTFeatureDetectorCV detector;
     detector.detectAndCompute(img, keypoints, descriptors);
 
     //check that the number of keypoints is not zero

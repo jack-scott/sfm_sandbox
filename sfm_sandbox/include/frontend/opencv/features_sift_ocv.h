@@ -5,16 +5,22 @@
 
 #include <opencv2/features2d.hpp>
 
+namespace feature_detector{
+
 class SIFTFeatureDetectorCV : public FeatureDetector
 {
 public:
     SIFTFeatureDetectorCV();
     ~SIFTFeatureDetectorCV();
+    using FeatureDetector::detect;
+    using FeatureDetector::compute;
+    using FeatureDetector::detectAndCompute;
     void detect(const std::shared_ptr<cv::Mat>& image, std::vector<cv::KeyPoint>& keypoints);
     void compute(const std::shared_ptr<cv::Mat>& image, std::vector<cv::KeyPoint>& keypoints, cv::Mat& descriptors);
     void detectAndCompute(const std::shared_ptr<cv::Mat>& image, std::vector<cv::KeyPoint>& keypoints, cv::Mat& descriptors);
 private:
     cv::Ptr<cv::SIFT> detector;
 };
+} // namespace feature_detector
 
 #endif // FEATURES_SIFT_CV_H
