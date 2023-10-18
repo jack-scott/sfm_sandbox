@@ -4,6 +4,8 @@
 #include <vector>
 
 #include <opencv4/opencv2/core.hpp>
+#include <glog/logging.h>
+
 
 #include "shared/image.h"
 #include "shared/frame.h"
@@ -21,9 +23,8 @@ protected:
 
 public:
     void detect(std::vector<std::shared_ptr<Image>> images, std::vector<std::vector<cv::KeyPoint>>& keypoints){
-        for (auto image : images){
-            std::vector<cv::KeyPoint> image_keypoints;
-            detect(image->getData(), image_keypoints);
+        for (size_t i = 0; i < images.size(); i++){
+            detect(images[i]->getData(), keypoints[i]);
         }
     }
 
@@ -43,12 +44,11 @@ public:
 
     void compute(std::vector<std::shared_ptr<Image>> images, std::vector<std::vector<cv::KeyPoint>>& keypoints, std::vector<cv::Mat>& descriptors)
     {
-        for (int i = 0; i < images.size(); i++){
-            std::vector<cv::KeyPoint> image_keypoints = keypoints[i];
-            cv::Mat image_descriptors;
-            compute(images[i]->getData(), image_keypoints, image_descriptors);
-            keypoints[i] = image_keypoints;
-            descriptors.push_back(image_descriptors);
+        CHECK_EQ(images.size(), keypoints.size());
+        CHECK_EQ(images.size(), descriptors.size());
+
+        for (size_t i = 0; i < images.size(); i++){
+            compute(images[i]->getData(), keypoints[i], descriptors[i]);
         }
     }
 
@@ -72,12 +72,10 @@ public:
 
     void detectAndCompute(std::vector<std::shared_ptr<Image>> images, std::vector<std::vector<cv::KeyPoint>>& keypoints, std::vector<cv::Mat>& descriptors)
     {
-        for (int i = 0; i < images.size(); i++){
-            std::vector<cv::KeyPoint> image_keypoints;
-            cv::Mat image_descriptors;
-            detectAndCompute(images[i]->getData(), image_keypoints, image_descriptors);
-            keypoints.push_back(image_keypoints);
-            descriptors.push_back(image_descriptors);
+        CHECK_EQ(images.size(), keypoints.size());
+        CHECK_EQ(images.size(), descriptors.size());
+        for (size_t i = 0; i < images.size(); i++){
+            detectAndCompute(images[i]->getData(), keypoints[i], descriptors[i]);
         }
     }
 

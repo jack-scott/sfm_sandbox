@@ -16,6 +16,10 @@ set(CMAKE_BUILD_TYPE Debug)
 # Find the GTest library
 find_package(GTest REQUIRED)
 
+# Find glog library
+find_package(glog REQUIRED)
+include_directories(${GLOG_INCLUDE_DIRS})
+
 # Find opencv
 find_package(OpenCV REQUIRED)
 include_directories(${OpenCV_INCLUDE_DIRS})
@@ -85,7 +89,7 @@ target_include_directories(${PROJECT_NAME} PRIVATE
 
 # target_include_directories(${PROJECT_NAME} PUBLIC ${OpenCV_INCLUDE_DIRS})
 # Link modules and dependencies
-target_link_libraries(${PROJECT_NAME} ${OpenCV_LIBS} dataloader shared gtsam)
+target_link_libraries(${PROJECT_NAME} ${OpenCV_LIBS} dataloader shared gtsam glog::glog)
 
 if (GUI)
     #Visualizer demo executable
@@ -113,7 +117,7 @@ target_include_directories(tests PRIVATE
 )
 
 # Link the test executable with the GTest library
-target_link_libraries(tests GTest::GTest GTest::Main dataloader shared frontend gtsam ${OpenCV_LIBS})  
+target_link_libraries(tests GTest::GTest GTest::Main dataloader shared frontend gtsam ${OpenCV_LIBS} glog::glog)  
 
 
 # Add the test executable

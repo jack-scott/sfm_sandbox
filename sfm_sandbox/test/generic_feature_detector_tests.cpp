@@ -41,6 +41,10 @@ TEST_F(GenericFeatureDetectorTest, test_from_image_vector)
 {
     std::shared_ptr<Image> image1 = std::make_shared<Image>(image_path, true);
     std::shared_ptr<Image> image2 = std::make_shared<Image>(image_path, true);
+
+    EXPECT_TRUE(image1->isLoaded());
+    EXPECT_TRUE(image2->isLoaded());
+
     std::vector<std::shared_ptr<Image>> images;
     images.push_back(image1);
     images.push_back(image2);

@@ -34,10 +34,10 @@ RUN wget https://gitlab.com/libeigen/eigen/-/archive/3.4.0/eigen-3.4.0.tar.gz
 RUN tar -xf eigen-3.4.0.tar.gz
 RUN mv eigen-3.4.0/Eigen /usr/local/include/
 
+#install gtest
 USER user
 WORKDIR /home/user
 
-#install gtest
 RUN git clone https://github.com/google/googletest
 RUN cd googletest && \
     mkdir build && \
@@ -49,6 +49,19 @@ USER root
 RUN cd googletest && \
     cd build && \
     make install
+
+#install glog
+USER user
+WORKDIR /home/user
+
+RUN git clone https://github.com/google/glog.git
+RUN cd glog && \
+    cmake -S . -B build -G "Unix Makefiles" && \
+    cmake --build build
+
+USER root
+RUN cd glog && \
+    cmake --build build --target install
 
 USER user
 
