@@ -5,7 +5,7 @@
 
 #include <opencv2/features2d.hpp>
 
-namespace feature_detector{
+namespace sfm{
 
 class ORBFeatureDetectorCV : public FeatureDetector
 {
@@ -22,6 +22,5 @@ private:
     cv::Ptr<cv::ORB> detector;
 };
 
-} // namespace feature_detector
-
+} // namespace sfm
 #endif // FEATURES_ORB_CV_H

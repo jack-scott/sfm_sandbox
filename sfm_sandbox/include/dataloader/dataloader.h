@@ -5,6 +5,7 @@
 #include <string>
 
 #include "shared/image.h"
+namespace sfm{
 class DataLoader
 {
 public:
@@ -23,6 +24,6 @@ private:
     std::vector<Image> createImagesFromPath(std::string path, bool load_now);
     bool is_supported_file(const std::string& filename, const std::vector<std::string>& supported_extensions);                                                          
 };
-
+} // namespace sfm
 
 #endif // DATALOADER_H

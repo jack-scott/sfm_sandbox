@@ -9,6 +9,7 @@
 #include <opencv2/imgcodecs.hpp>
 #include <opencv2/highgui.hpp>
 
+using namespace sfm;
 
 class FeaturesCVTest : public ::testing::Test
 {
@@ -40,7 +41,7 @@ TEST_F(FeaturesCVTest, test_orb_features)
     std::vector<cv::KeyPoint> keypoints;
     cv::Mat descriptors;
 
-    feature_detector::ORBFeatureDetectorCV detector;
+    sfm::ORBFeatureDetectorCV detector;
     detector.detectAndCompute(img, keypoints, descriptors);
 
     //check that the number of keypoints is not zero
@@ -71,7 +72,7 @@ TEST_F(FeaturesCVTest, test_sift_features)
     std::vector<cv::KeyPoint> keypoints;
     cv::Mat descriptors;
 
-    feature_detector::SIFTFeatureDetectorCV detector;
+    sfm::SIFTFeatureDetectorCV detector;
     detector.detectAndCompute(img, keypoints, descriptors);
 
     //check that the number of keypoints is not zero

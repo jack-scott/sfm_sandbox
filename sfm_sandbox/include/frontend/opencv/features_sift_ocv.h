@@ -5,7 +5,7 @@
 
 #include <opencv2/features2d.hpp>
 
-namespace feature_detector{
+namespace sfm{
 
 class SIFTFeatureDetectorCV : public FeatureDetector
 {
@@ -21,6 +21,5 @@ public:
 private:
     cv::Ptr<cv::SIFT> detector;
 };
-} // namespace feature_detector
-
+} // namespace sfm
 #endif // FEATURES_SIFT_CV_H

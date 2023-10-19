@@ -1,6 +1,6 @@
 #include "frontend/opencv/features_orb_ocv.h"
 
-namespace feature_detector{
+namespace sfm{
 
 ORBFeatureDetectorCV::ORBFeatureDetectorCV()
 {
@@ -22,4 +22,4 @@ void ORBFeatureDetectorCV::detectAndCompute(const std::shared_ptr<cv::Mat>& imag
     detector->detectAndCompute(*image,  cv::noArray(), keypoints, descriptors);
 }
 
-} // namespace feature_detector
+} // namespace sfm

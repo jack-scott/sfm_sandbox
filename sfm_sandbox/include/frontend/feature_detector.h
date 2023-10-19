@@ -11,7 +11,7 @@
 #include "shared/frame.h"
 
 //TODO: Const all through here?
-namespace feature_detector{
+namespace sfm{
 
 class FeatureDetector
 {
@@ -99,6 +99,5 @@ public:
 
 };
 
-} // namespace feature_detector
-
+} // namespace sfm
 #endif // FEATURE_DETECTOR_H

@@ -5,6 +5,7 @@
 #include <opencv4/opencv2/imgcodecs.hpp>
 #include <opencv4/opencv2/imgproc.hpp>
 
+namespace sfm{
 
 Image::Image(std::string path, bool load_now) : path_(path), data_(std::make_shared<cv::Mat>())
 {
@@ -114,3 +115,5 @@ void Image::generateTimestampAndSet_()
 {
     timestamp_ = std::time(nullptr);
 }
+
+} // namespace sfm

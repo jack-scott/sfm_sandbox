@@ -2,6 +2,8 @@
 
 #include <filesystem>
 
+namespace sfm{
+    
 DataLoader::DataLoader() {
 }
 
@@ -53,3 +55,5 @@ bool DataLoader::is_supported_file(const std::string& filename, const std::vecto
     }
     return false;
 }
+
+} // namespace sfm

@@ -1,16 +1,17 @@
 #include "frame.h"
 
+namespace sfm{
 
-Frame::Frame(std::shared_ptr<Camera> camera, std::shared_ptr<Image> rgb_image) : camera_(camera), image_(rgb_image) {
+Frame::Frame(Camera camera, std::shared_ptr<Image> rgb_image) : camera_(camera), image_(rgb_image) {
     //Might need to initialise depth and mask here
 }
 
-Frame::Frame(std::shared_ptr<Camera> camera, std::shared_ptr<Image> rgb_image, gtsam::Pose3 pose) : camera_(camera), image_(rgb_image), pose_(pose) {
+Frame::Frame(Camera camera, std::shared_ptr<Image> rgb_image, gtsam::Pose3 pose) : camera_(camera), image_(rgb_image), pose_(pose) {
     //Might need to initialise depth and mask here
 
 }
 
-std::shared_ptr<Camera> Frame::getCamera() {
+Camera Frame::getCamera() {
     return camera_;
 }
 
@@ -49,3 +50,5 @@ gtsam::Pose3 Frame::getPose() {
 void Frame::setPose(gtsam::Pose3 pose) {
     pose_ = pose;
 }
+
+} // namespace sfm

@@ -4,6 +4,8 @@
 #include <fstream>
 #include <opencv4/opencv2/imgcodecs.hpp>
 
+
+using namespace sfm;
 class ImageTest : public ::testing::Test
 {
 protected:

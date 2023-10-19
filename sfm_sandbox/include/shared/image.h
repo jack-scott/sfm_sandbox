@@ -5,6 +5,7 @@
 
 #include "sfm_types.h"
 
+
 /**
  * @class
  * @brief Basic image data container class
@@ -14,6 +15,7 @@
  * TODO: This class should more natively support lazy loading of image data.
  * 
 */
+namespace sfm{
 
 class Image {
 
@@ -49,5 +51,5 @@ private:
     void generateTimestampAndSet_();
 
 };
-
+} // namespace sfm
 #endif // IMAGE_H

@@ -4,6 +4,8 @@
 #include <iostream>
 #include <vector>
 
+using namespace sfm;
+
 int main(int argc, char** argv) {
     std::string path = argv[1];
     DataLoader dataloader;

@@ -16,6 +16,7 @@
 #include "shared/camera.h"
 #include "shared/sfm_types.h"
 
+using namespace sfm;
 class GenericFeatureDetectorTest : public ::testing::Test
 {
 protected:
@@ -52,7 +53,7 @@ TEST_F(GenericFeatureDetectorTest, test_from_image_vector)
     cv::Mat camera_matrix = cv::Mat::eye(3, 3, CV_64F);
     cv::Mat distortion_coefficients = cv::Mat::zeros(5, 1, CV_64F);
     cv::Size image_size(640, 480);
-    std::shared_ptr<Camera> camera1= std::make_shared<Camera>("test", CameraModel::PINHOLE, DistortionModel::RADTAN, camera_matrix, distortion_coefficients, image_size);
+    Camera camera1("test", CameraModel::PINHOLE, DistortionModel::RADTAN, camera_matrix, distortion_coefficients, image_size);
     
     Frame frame1(camera1, image1);
 
@@ -62,7 +63,7 @@ TEST_F(GenericFeatureDetectorTest, test_from_image_vector)
     keypoints_vec.push_back(keypoints1);
     keypoints_vec.push_back(keypoints2);
 
-    feature_detector::ORBFeatureDetectorCV detector;
+    sfm::ORBFeatureDetectorCV detector;
     
     
     detector.detect(images, keypoints_vec);

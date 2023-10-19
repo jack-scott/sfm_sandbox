@@ -8,9 +8,10 @@
 #include "shared/camera.h"
 #include "shared/sfm_types.h"
 
+namespace sfm{
 class Frame {
 private:
-    std::shared_ptr<Camera> camera_;
+    Camera camera_;
     std::shared_ptr<Image> image_;
     std::shared_ptr<Image> depth_;
     std::shared_ptr<Image> mask_;
@@ -20,11 +21,11 @@ private:
 
 public:
     // Constructor
-    Frame(std::shared_ptr<Camera> camera, std::shared_ptr<Image> rgb_image);
-    Frame(std::shared_ptr<Camera> camera, std::shared_ptr<Image> rgb_image, gtsam::Pose3 pose);
+    Frame(Camera camera, std::shared_ptr<Image> rgb_image);
+    Frame(Camera camera, std::shared_ptr<Image> rgb_image, gtsam::Pose3 pose);
 
     // Getters
-    std::shared_ptr<Camera> getCamera();
+    Camera getCamera();
     std::shared_ptr<Image> getImage();
     std::shared_ptr<Image> getDepth();
     std::shared_ptr<Image> getMask();
@@ -37,6 +38,6 @@ public:
     // Setters
     void setPose(gtsam::Pose3 pose);
 };
-
+} // namespace sfm
 
 #endif // FRAME_H

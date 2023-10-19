@@ -7,6 +7,8 @@
 
 #include <opencv4/opencv2/imgcodecs.hpp>
 
+using namespace sfm;
+
 class DataLoaderTest : public ::testing::Test
 {
 protected:
