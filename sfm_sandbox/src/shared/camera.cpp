@@ -1,14 +1,17 @@
 #include "camera.h"
 
-Camera::Camera(std::string name, CameraModel model, DistortionModel distortion_model,
-               cv::Mat K = cv::Mat::eye(3, 3, CV_64F),
-               cv::Mat distortion = cv::Mat::zeros(1, 5, CV_64F), cv::Size resolution = cv::Size())
+#include <opencv4/opencv2/core.hpp>
+
+namespace sfm {
+
+Camera::Camera(const std::string& name, cv::Size resolution, CameraModel model,
+               DistortionModel distortion_model, cv::Mat K, cv::Mat distortion)
     : name(name),
+      resolution(resolution),
       model(model),
       distortion_model(distortion_model),
       K(K),
-      distortion(distortion),
-      resolution(resolution) {
+      distortion(distortion) {
   // constructor body
 }
 
@@ -38,3 +41,5 @@ void Camera::undistortPoints(const std::vector<cv::Point2f>& points,
     return;
   }
 }
+
+}  // namespace sfm

@@ -47,8 +47,8 @@ TEST_F(GenericFeatureDetectorTest, test_from_image_vector) {
   cv::Mat camera_matrix = cv::Mat::eye(3, 3, CV_64F);
   cv::Mat distortion_coefficients = cv::Mat::zeros(5, 1, CV_64F);
   cv::Size image_size(640, 480);
-  Camera camera1("test", CameraModel::PINHOLE, DistortionModel::RADTAN, camera_matrix,
-                 distortion_coefficients, image_size);
+  Camera camera1("test", image_size, CameraModel::PINHOLE, DistortionModel::RADTAN, camera_matrix,
+                 distortion_coefficients);
 
   Frame frame1(camera1, image1);
 
