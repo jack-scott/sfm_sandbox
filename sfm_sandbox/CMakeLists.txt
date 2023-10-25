@@ -89,7 +89,7 @@ target_include_directories(${PROJECT_NAME} PRIVATE
 
 # target_include_directories(${PROJECT_NAME} PUBLIC ${OpenCV_INCLUDE_DIRS})
 # Link modules and dependencies
-target_link_libraries(${PROJECT_NAME} ${OpenCV_LIBS} dataloader shared gtsam glog::glog)
+target_link_libraries(${PROJECT_NAME} ${OpenCV_LIBS} dataloader shared frontend gtsam glog::glog)
 
 if (GUI)
     #Visualizer demo executable

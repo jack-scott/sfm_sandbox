@@ -1,0 +1,139 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Run and debug in already running container",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "sfm_sandbox/build/bin/SFMsandbox",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "/home/user/sfm_sandbox",
+            "environment": [],
+            "externalConsole": false,
+            "pipeTransport": {
+                "pipeCwd": "${workspaceRoot}",
+                "pipeProgram": "docker",
+                "pipeArgs": [
+                    "exec",
+                    "-i",
+                    "sfm_build_env",
+                    "sh",
+                    "-c"
+                ],
+                "debuggerPath": "/usr/bin/gdb"
+            },
+            "sourceFileMap": {
+                "/home/user/sfm_sandbox": "${workspaceRoot}"
+            },
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ]
+        },
+        {
+            "name": "Attach and debug running process in container",
+            "type": "cppdbg",
+            "request": "attach",
+            "program": "sfm_sandbox/build/bin/SFMsandbox",
+            "processId": "${command:pickRemoteProcess}",
+            "pipeTransport": {
+                "pipeCwd": "${workspaceRoot}",
+                "pipeProgram": "docker",
+                "pipeArgs": [
+                    "exec",
+                    "-i",
+                    "sfm_build_env",
+                    "sh",
+                    "-c"
+                ],
+                "debuggerPath": "/usr/bin/gdb"
+            },
+            "sourceFileMap": {
+                "/home/user/sfm_sandbox": "${workspaceRoot}"
+            },
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ]
+        },
+        {
+            "name": "Build and debug in already running container",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "sfm_sandbox/build/bin/SFMsandbox",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "/home/user/sfm_sandbox",
+            "environment": [],
+            "externalConsole": false,
+            "pipeTransport": {
+                "pipeCwd": "${workspaceRoot}",
+                "pipeProgram": "docker",
+                "pipeArgs": [
+                    "exec",
+                    "-i",
+                    "sfm_build_env",
+                    "sh",
+                    "-c"
+                ],
+                "debuggerPath": "/usr/bin/gdb"
+            },
+            "sourceFileMap": {
+                "/home/user/sfm_sandbox": "${workspaceRoot}"
+            },
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ],
+            "preLaunchTask": "build"
+        },
+        {
+            "name": "Build and run in already running container",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "sfm_sandbox/build/bin/SFMsandbox",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "/home/user/sfm_sandbox",
+            "environment": [],
+            "externalConsole": false,
+            "pipeTransport": {
+                "pipeCwd": "${workspaceRoot}",
+                "pipeProgram": "docker",
+                "pipeArgs": [
+                    "exec",
+                    "-i",
+                    "sfm_build_env",
+                    "sh",
+                    "-c"
+                ],
+                "debuggerPath": "/usr/bin/gdb"
+            },
+            "sourceFileMap": {
+                "/home/user/sfm_sandbox": "${workspaceRoot}"
+            },
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ],
+            "preLaunchTask": "build and run"
+        },
+    ]
+}

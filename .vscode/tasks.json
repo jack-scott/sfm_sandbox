@@ -1,0 +1,51 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "cmake generate",
+            "type": "shell",
+            "command": "docker exec -it sfm_build_env bash -c 'cd sfm_sandbox/sfm_sandbox/build && cmake ../'",
+            "problemMatcher": []
+        },
+        {
+            "label": "build",
+            "type": "shell",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "command": "docker exec -it sfm_build_env bash -c 'cd sfm_sandbox/sfm_sandbox/build && make'",
+            "problemMatcher": [
+                "$gcc"
+            ]
+        },
+        {
+            "label": "clean",
+            "type": "shell",
+            "command": "docker exec -it -it sfm_build_env bash -c 'cd sfm_sandbox/sfm_sandbox/build && make clean'",
+            "problemMatcher": [
+                "$gcc"
+            ]
+        },
+        {
+            "label": "build and run",
+            "type": "shell",
+            "command": "docker exec -it sfm_build_env bash -c 'cd sfm_sandbox/sfm_sandbox/build && make && bin/SFMsandbox ../../output/monkey/'",
+            "problemMatcher": [
+                "$gcc"
+            ],
+        },
+        {
+            "label": "build and run tests",
+            "type": "shell",
+            "command": "docker exec -it sfm_build_env bash -c 'cd sfm_sandbox/sfm_sandbox/build && make && bin/tests'",
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": {
+                "kind": "test",
+                "isDefault": true
+            }
+        }
+    ]
+}
