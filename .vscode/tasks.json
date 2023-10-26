@@ -10,10 +10,10 @@
         {
             "label": "build",
             "type": "shell",
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            },
+            // "group": {
+            //     "kind": "build",
+            //     "isDefault": true
+            // },
             "command": "docker exec -it sfm_build_env bash -c 'cd sfm_sandbox/sfm_sandbox/build && make'",
             "problemMatcher": [
                 "$gcc"
@@ -30,6 +30,10 @@
         {
             "label": "build and run",
             "type": "shell",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
             "command": "docker exec -it sfm_build_env bash -c 'cd sfm_sandbox/sfm_sandbox/build && make && bin/SFMsandbox ../../output/monkey/'",
             "problemMatcher": [
                 "$gcc"

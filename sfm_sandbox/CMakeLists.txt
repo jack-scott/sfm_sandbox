@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.12)
 project(SFMsandbox)
 
-option(GUI "Build the gui" OFF)
+option(GUI "Build the gui" ON)
 
 # Set C++ standard
 set(CMAKE_CXX_STANDARD 17)
@@ -89,13 +89,14 @@ target_include_directories(${PROJECT_NAME} PRIVATE
 
 # target_include_directories(${PROJECT_NAME} PUBLIC ${OpenCV_INCLUDE_DIRS})
 # Link modules and dependencies
-target_link_libraries(${PROJECT_NAME} ${OpenCV_LIBS} dataloader shared frontend gtsam glog::glog)
+target_link_libraries(${PROJECT_NAME} ${OpenCV_LIBS} dataloader shared frontend gtsam glog::glog ${Open3D_LIBRARIES})
 
 if (GUI)
     #Visualizer demo executable
     add_executable(vizualizer_demo ${CMAKE_CURRENT_SOURCE_DIR}/src/visualizer_demo.cpp)
     # Link Open3D libraries
     target_link_libraries(vizualizer_demo PRIVATE ${Open3D_LIBRARIES})
+    target_link_libraries(${PROJECT_NAME} ${Open3D_LIBRARIES})
 endif()
 
 #Tests
