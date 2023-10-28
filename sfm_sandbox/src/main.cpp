@@ -6,6 +6,7 @@
 #include "shared/camera.h"
 #include "shared/frame.h"
 #include "shared/image.h"
+#include "visualizer/visualizer_tools.h"
 
 #include <opencv2/opencv.hpp>
 #include "open3d/Open3D.h"
@@ -35,10 +36,8 @@ int main(int argc, char** argv) {
     std::cout << frame->getImage()->getName() << std::endl;
     std::cout << frame->getDescriptors().size() << std::endl;
     std::cout << frame->getKeypoints().size() << std::endl;
-    cv::Mat image_with_points;
-    cv::drawKeypoints(*frame->getImage()->getData(), frame->getKeypoints(), image_with_points);
-    cv::imshow("Keypoints", image_with_points);
-    cv::waitKey(0);
+
+    visualizer::drawKeypoints(frame);
   }
 
   for (auto point : frame_bundle[0]->getKeypoints()) {

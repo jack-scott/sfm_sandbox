@@ -21,3 +21,15 @@ If you are using VSCode then you will be able to build easily by just pressing `
 To run tests in VSCode you can press `CTRL-Shift-P` and then search for a task called `Run test task`
 To build and run use `CTRL-Shift-D` to bring up the debug tab and then use the `Build and run in already running container` task
 You can also build and debug from this menu
+
+
+# Psuedo code for next steps
+* Assume that images are sequential
+* Make feature matching frame to frame
+* Make visualizer show 3D camera positions
+* Calculate poses using fundamental matrix - compare to ground truth
+* Calculate poses using essential matrix - compare to ground truth
+* Add robustness to see how this effects the results
+  * Use cross matching for features
+  * RANSAC for matching using more points
+* Use GTSAM for bundle adjustment

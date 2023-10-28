@@ -76,20 +76,29 @@ target_include_directories(frontend PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/include/shared
     ${CMAKE_CURRENT_SOURCE_DIR}/include/frontend
     ${CMAKE_CURRENT_SOURCE_DIR}/include/frontend/opencv
-
 )
 
+add_library(visualizer SHARED
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/visualizer/visualizer_tools.cpp
+)
+
+target_include_directories(visualizer PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR}/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/visualizer
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/shared
+)
 
 # Add includes
 target_include_directories(${PROJECT_NAME} PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/include
     ${CMAKE_CURRENT_SOURCE_DIR}/include/dataloader
     ${CMAKE_CURRENT_SOURCE_DIR}/include/shared
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/visualizer
 )
 
 # target_include_directories(${PROJECT_NAME} PUBLIC ${OpenCV_INCLUDE_DIRS})
 # Link modules and dependencies
-target_link_libraries(${PROJECT_NAME} ${OpenCV_LIBS} dataloader shared frontend gtsam glog::glog ${Open3D_LIBRARIES})
+target_link_libraries(${PROJECT_NAME} ${OpenCV_LIBS} dataloader shared frontend visualizer gtsam glog::glog ${Open3D_LIBRARIES})
 
 if (GUI)
     #Visualizer demo executable
